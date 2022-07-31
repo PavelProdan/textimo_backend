@@ -10,31 +10,27 @@ app.use(cors());
 const { port } = require('./config/config.js');
 const db = require("./services/db_loader.js");
 
+// _id: 'id1', song_title, total_num_lyrics               
 
-// Load Databases
+var doc2 = {
+    song_title: 'Example song number 1',
+    total_num_lyrics: 8
+};
 
-
-var doc = { hello: 'world'
-               , n: 5
-               , today: new Date()
-               , nedbIsAwesome: true
-               , notthere: null
-               , notToBeSaved: undefined  // Will not be saved
-               , fruits: [ 'apple', 'orange', 'pear' ]
-               , infos: { name: 'nedb' }
-               };
-
-db.songs_db.insert(doc, function (err, newDoc) {   
+db.songs_db.insert(doc2, function (err, newDoc) {   
     if(err){
         console.log(err);
     }
     console.log(newDoc);
+    new_doc_json = JSON.parse(JSON.stringify(newDoc));
+    console.log(new_doc_json._id);
 });
 
 
 // Routes requirements
 const CheckForConnectionRoute = require("./routes/CheckForConnection.js");
 
+// Routes def
 app.use("/CheckForConnection", CheckForConnectionRoute);
 
 app.listen(port, () => console.log("Server is listening on port " + port));
