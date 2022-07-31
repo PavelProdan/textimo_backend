@@ -1,4 +1,7 @@
-//this is the main app
+// Textimo Backend
+// This NodeJS app is the main server and should be hosted on a RaspberryPi device
+// Software developed by Pavel Prodan in 2022
+
 const express = require("express");
 const app = express();
 
