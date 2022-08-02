@@ -17,12 +17,18 @@ const { port } = require('./config/config.js');
 const CheckForConnectionRoute = require("./routes/CheckForConnection.js");
 const songsRoute =  require("./routes/songs.js");
 const add_songRoute =  require("./routes/add_song.js");
+const add_lyricsRoute =  require("./routes/add_lyrics.js");
+const songRoute =  require("./routes/song.js");
+const previewRoute =  require("./routes/preview.js");
 
 
 // Routes def
 app.use("/CheckForConnection", CheckForConnectionRoute);
 app.use("/songs", songsRoute);
 app.use("/add_song", add_songRoute);
+app.use("/add_lyrics", add_lyricsRoute);
+app.use("/song", songRoute);
+app.use("/preview", previewRoute);
 
 
 // Starting the server

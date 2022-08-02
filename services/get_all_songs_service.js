@@ -1,3 +1,4 @@
+//service that returns all songs from the database and return the new document using NeDB
 const db = require("./db_loader.js");
 
 //function that returns all songs from the database and return the new document using NeDB
