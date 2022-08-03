@@ -5,8 +5,11 @@
 // Dependencies
 const express = require("express");
 const cors = require("cors");
+const http = require('http');
 const helmet =  require("helmet");
 const app = express();
+const server = http.createServer(app);
+
 app.use(helmet());
 app.use(cors());
 app.use(express.json()); 
@@ -34,6 +37,7 @@ const previewRoute =  require("./routes/preview.js");
 //const stop_playingRoute =  require("./routes/stop_playing.js");
 const add_reportRoute =  require("./routes/add_report.js");
 const reportsRoute =  require("./routes/reports.js");
+const LivePageRoute =  require("./routes/LivePage.js");
 
 
 // Routes def
@@ -48,9 +52,10 @@ app.use("/preview", previewRoute);
 //app.use("/stop_playing", stop_playingRoute);
 app.use("/add_report", add_reportRoute);
 app.use("/reports", reportsRoute);
+app.use("/LivePage", LivePageRoute);
 
 
 // Starting the server
-app.listen(port, () => {
+server.listen(port, () => {
     console.log("Server is listening on port " + port);
 });
