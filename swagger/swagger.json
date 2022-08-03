@@ -478,6 +478,95 @@
             }
           }
         }
+      },
+      "/now_playing": {
+        "get": {
+          "tags": [
+            "Projector (live)"
+          ],
+          "summary": "Get the song_id and the verse_number from the current displayed song on the LivePage",
+          "description": "",
+          "operationId": "now_playing",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "success",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/NowPlaying"
+                }
+              }
+            },
+            "500": {
+              "description": "Eror"
+            }
+          }
+        }
+      },
+      "/stop_playing": {
+        "get": {
+          "tags": [
+            "Projector (live)"
+          ],
+          "summary": "Stop the live streaming and clear the content from LivePage",
+          "description": "",
+          "operationId": "stop_playing",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Eror"
+            }
+          }
+        }
+      },
+      "/projector": {
+        "post": {
+          "tags": [
+            "Projector (live)"
+          ],
+          "summary": "Send data to the LivePage",
+          "description": "",
+          "operationId": "project",
+          "consumes": [
+            "application/json"
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Data to be sent to the LivePage",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Projector"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            },
+            "500": {
+              "description": "Eror"
+            }
+          }
+        }
       }
     },
     "definitions": {
@@ -698,6 +787,51 @@
         ],
         "xml": {
           "name": "Lyrics-multiple"
+        }
+      },
+      "NowPlaying": {
+        "type": "object",
+        "required": [
+          "song_id",
+          "verse_number"
+        ],
+        "properties": {
+          "song_id": {
+            "type": "string",
+            "example": "song_id"
+          },
+          "verse_number": {
+            "type": "string",
+            "example": "2"
+          }
+        },
+        "xml": {
+          "name": "NowPlaying"
+        }
+      },
+      "Projector": {
+        "type": "object",
+        "required": [
+          "live_data",
+          "song_id",
+          "verse_number"
+        ],
+        "properties": {
+          "live_data": {
+            "type": "string",
+            "example": "Strofa propriu-zisa: vers vers 1 verse vers 2.."
+          },
+          "song_id": {
+            "type": "string",
+            "example": "song_id"
+          },
+          "verse_number": {
+            "type": "string",
+            "example": "2"
+          }
+        },
+        "xml": {
+          "name": "NowPlaying"
         }
       }
     }
