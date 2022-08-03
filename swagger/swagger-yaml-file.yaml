@@ -1,0 +1,557 @@
+swagger: "2.0"
+info:
+  description: "This is the REST API Documentation Page for Textimo Server"
+  version: "1.0.0"
+  title: "Textimo Server API"
+  contact:
+    email: "prodanpavel05@gmail.com"
+  
+host: "localhost:3000"
+
+tags:
+- name: "Song"
+  description: "All available request related to Songs"
+  
+- name: "Lyrics"
+  description: "All available request related to lyrics (strofe)"
+  
+- name: "Projector (live)"
+  description: "All available requests to manage the LivePage, for example projector module, clear LivePage or get current song"
+
+- name: "View & Preview"
+  description: "All available requests view or preview the lyrics of a specific song"
+
+- name: "Connection"
+  description: "Available request to check the connection status to server"
+  
+- name: "Reports"
+  description: "All requests for Reports managment"
+  
+schemes:
+- "http"
+- "https"
+
+paths:
+  /songs:
+    get:
+      tags:
+      - "Song"
+      summary: "Get all songs from the database"
+      description: "This route accepts paginations using URL query params: ?limit=2&offset=0 (pagination is not required)"
+      operationId: "songs"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      
+      responses:
+        "200":
+          description: "success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Song"
+        "500":
+          description: "Eror"
+          
+          
+  /add_song:
+    post:
+      tags:
+      - "Song"
+      summary: "Add new song in the database"
+      description: ""
+      operationId: "add_song"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Song object that need to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Song-ToBeAdded"
+      
+      responses:
+        "200":
+          description: "success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Song"
+        "500":
+          description: "Eror"
+          
+          
+  /song/{song_id}:
+    delete:
+      tags:
+      - "Song"
+      summary: "Delete a specific song by song_id"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      
+      parameters:
+        - in: path
+          name: song_id
+          type: string
+          required: true
+          description: ID of the song that must be deleted.
+      
+      responses:
+        "400":
+          description: "The item that you try to delete doesn't exist"
+        "200":
+          description: "success"
+        "500":
+          description: "Eror"
+    
+    put:
+      tags:
+      - "Song"
+      summary: "Edit a specific song by song_id"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      
+      parameters:
+        - in: path
+          name: song_id
+          type: string
+          required: true
+          description: ID of the song that must be deleted.
+      
+      responses:
+        "400":
+          description: "The item that you try to update doesn't exist"
+        "200":
+          description: "success"
+        "500":
+          description: "Eror"
+       
+    get:
+      tags:
+      - "Song"
+      summary: "Edit a specific song by song_id"
+      description: ""
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      
+      parameters:
+        - in: path
+          name: song_id
+          type: string
+          required: true
+          description: ID of the song that must be deleted.
+      
+      responses:
+        "200":
+          description: "success"
+        "500":
+          description: "Eror"
+          
+  /add_lyrics{song_id}:
+    post:
+      tags:
+      - "Lyrics"
+      summary: "Add a new verse to Lyrics DB and append it to a song_id"
+      description: ""
+      operationId: "add_lyrics"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "New lyrics object"
+        required: true
+        schema:
+          $ref: "#/definitions/Lyrics-ToBeAdded"
+      - in: path
+        name: song_id
+        type: string
+        required: true
+        description: ID of the song.    
+      
+      responses:
+        "200":
+          description: "success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Lyrics-returned"
+        "500":
+          description: "Eror"
+          
+  /preview/{song_id}/all:
+    get:
+      tags:
+      - "View & Preview"
+      summary: "Get all lyrics asociated to the given song_id"
+      description: ""
+      operationId: "preview_all"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      
+      parameters:
+        - in: path
+          name: song_id
+          type: string
+          required: true
+          description: ID of the song
+     
+      responses:
+        "200":
+          description: "success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Lyrics-multiple"
+        "500":
+          description: "Eror"
+        "400":
+          description: "The given song_id is invalid or doesn't exist"  
+          
+  /preview/{song_id}/{verse_number}:
+    get:
+      tags:
+      - "View & Preview"
+      summary: "Get one specific lyrics asociated to the given song_id"
+      description: ""
+      operationId: "preview_specific"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      
+      parameters:
+        - in: path
+          name: song_id
+          type: string
+          required: true
+          description: ID of the song
+        - in: path
+          name: verse_number
+          type: string
+          required: true
+          description: The number of the verse you want to retrieve 
+     
+      responses:
+        "200":
+          description: "success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Lyrics-returned"
+        "500":
+          description: "Eror"
+        "400":
+          description: "The given song_id is invalid or doesn't exist"
+      
+  /CheckForConnection:
+    get:
+      tags:
+      - "Connection"
+      summary: "Check the connection between Client and Textimo Server"
+      description: ""
+      operationId: "checkforconnection"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+     
+      responses:
+        "200":
+          description: "connected"
+          
+  /add_report:
+    get:
+      tags:
+      - "Reports"
+      summary: "Add a new report (problem related to lyrics)"
+      description: ""
+      operationId: "add_report"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "New lyrics object"
+        required: true
+        schema:
+          $ref: "#/definitions/Report-ToBeAdded"
+       
+      responses:
+        "200":
+          description: "success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Report-returned"
+        "500":
+          description: "Eror"
+  
+  /reports:
+    get:
+      tags:
+      - "Reports"
+      summary: "Retrieve all reports or edit a report"
+      description: ""
+      operationId: "reports"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+       
+      responses:
+        "200":
+          description: "success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Report-multiple"
+        "500":
+          description: "Eror"  
+        "400":
+          description: "The Reports database is empty (0 results)"
+          
+    put:
+      tags:
+      - "Reports"
+      summary: "Update the status of a specific report"
+      description: ""
+      operationId: "report_update"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Report object that will be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/ReportUpdate"
+       
+      responses:
+        "200":
+          description: "success"
+        "500":
+          description: "Eror"  
+        "400":
+          description: "The report_id that you're trying to update is invalid or doesn't exist"      
+
+definitions:
+  
+  Song:
+    type: "object"
+    required:
+    - "song_title"
+    - "total_num_lyrics"
+    properties:
+      
+      song_title:
+        type: "string"
+        example: "Example song number x"
+      
+      total_num_lyrics:
+        type: "integer"
+        example: "4"
+      
+      _id:
+        type: "string"
+    xml:
+      name: "Song"
+      
+  Song-ToBeAdded:
+    type: "object"
+    required:
+    - "song_title"
+    - "total_num_lyrics"
+    properties:
+     
+      song_title:
+        type: "string"
+        example: "Example song number x"
+      
+      total_num_lyrics:
+        type: "integer"
+        example: "4"
+    xml:
+      name: "Song-ToBeAdded"
+      
+  Lyrics-ToBeAdded:
+    type: "object"
+    required:
+    - "lyrics_text"
+    - "verse_number"
+    properties:
+     
+      lyrics_text:
+        type: "string"
+        example: "Example vers vers vers number 1"
+      
+      verse_number:
+        type: "integer"
+        example: "1"
+    xml:
+      name: "Lyrics-ToBeAdded"  
+  
+  Lyrics-returned:
+    type: "object"
+   
+    properties:
+      song_id:
+        type: "string"
+        example: "song_id"
+    
+      lyrics_text:
+        type: "string"
+        example: "Example vers vers vers number 1"
+      
+      verse_number:
+        type: "integer"
+        example: "1"
+        
+      _id:
+        type: "string"
+        example: "verse _id"
+    xml:
+      name: "Lyrics-returned"
+      
+  Lyrics-multiple:
+    type: "array"
+    items:
+      $ref: '#/definitions/Lyrics-returned'
+    example:
+      - song_id: songID1
+        lyrics_text: verse vers verse 1
+        verse_number: 1
+        _id: lyricsID1
+        
+      - song_id: songID2
+        lyrics_text: verse vers verse 2
+        verse_number: 2
+        _id: lyricsID2  
+   
+    xml:
+      name: "Lyrics-multiple"
+      
+  
+  Report-ToBeAdded:
+    type: "object"
+    required:
+    - "song_id"
+    - "verse_number"
+    - "report_text"
+    - "report_status"
+   
+    properties:
+      song_id:
+        type: "string"
+        example: "song_id"
+        
+      verse_number:
+        type: "integer"
+        example: "1"  
+    
+      report_text:
+        type: "string"
+        example: "ultimul vers are o problema"
+      
+      report_status:
+        type: "string"
+        example: "Deschis"
+        
+    xml:
+      name: "Lyrics-returned"
+      
+  Report-returned:
+    type: "object"
+    required:
+    - "song_id"
+    - "verse_number"
+    - "report_text"
+    - "report_status"
+   
+    properties:
+      song_id:
+        type: "string"
+        example: "song_id"
+        
+      verse_number:
+        type: "integer"
+        example: "1"  
+    
+      report_text:
+        type: "string"
+        example: "ultimul vers are o problema"
+      
+      report_status:
+        type: "string"
+        example: "Deschis"
+      
+      _id:
+        type: "string"
+        example: "new added report _id"  
+        
+    xml:
+      name: "Lyrics-returned"
+      
+  ReportUpdate:
+    type: "object"
+    required:
+    - "report_id"
+    - "report_status"
+   
+    properties:
+      report_id:
+        type: "string"
+        example: "report_id"
+    
+      report_status:
+        type: "string"
+        example: "REZOLVAT"
+    xml:
+      name: "Lyrics-returned"    
+      
+  Report-multiple:
+    type: "array"
+    items:
+      $ref: '#/definitions/Report-returned'
+    example:
+      - song_id: song_id_1
+        verse_number: 1
+        report_text: "problema la sfarsitul primului vers"
+        report_status: "Deschis"
+        _id: report_id_1
+        
+      - song_id: song_id_2
+        verse_number: 2
+        report_text: "problema la sfarsitul primului vers vers"
+        report_status: "Inchis"
+        _id: report_id_2
+   
+    xml:
+      name: "Lyrics-multiple"
+      
+
+      

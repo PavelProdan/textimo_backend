@@ -12,6 +12,15 @@ app.use(cors());
 app.use(express.json()); 
 const { port } = require('./config/config.js');
 
+// Swagger
+const swaggerUi = require("swagger-ui-express"),
+swaggerDocument = require("./swagger/swagger.json");
+app.use(
+    '/api-docs',
+    swaggerUi.serve, 
+    swaggerUi.setup(swaggerDocument)
+);
+
 
 // Routes requirements
 const CheckForConnectionRoute = require("./routes/CheckForConnection.js");
