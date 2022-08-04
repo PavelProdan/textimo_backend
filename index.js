@@ -10,8 +10,10 @@ const helmet =  require("helmet");
 const app = express();
 const server = http.createServer(app);
 const path = require('path');
+const { Server } = require("socket.io");
+const io = new Server(server);
 
-app.use(helmet());
+//app.use(helmet());
 app.use(cors());
 app.use(express.json()); 
 const { port } = require('./config/config.js');
@@ -24,9 +26,6 @@ app.use(
     swaggerUi.serve, 
     swaggerUi.setup(swaggerDocument)
 );
-
-//serve as static the files from the public folder using path join
-app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Routes requirements
@@ -57,6 +56,13 @@ app.use("/preview", previewRoute);
 app.use("/add_report", add_reportRoute);
 app.use("/reports", reportsRoute);
 app.use("/LivePage", LivePageRoute);
+
+// Socket.io
+io.on('connection', (socket) => {
+    socket.on('chat message', (msg) => {
+      console.log('message: ' + msg);
+    });
+  });
 
 
 // Starting the server
