@@ -209,7 +209,7 @@
           }
         }
       },
-      "/add_lyrics{song_id}": {
+      "/add_lyrics/{song_id}": {
         "post": {
           "tags": [
             "Lyrics"

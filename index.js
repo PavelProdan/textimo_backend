@@ -9,6 +9,7 @@ const http = require('http');
 const helmet =  require("helmet");
 const app = express();
 const server = http.createServer(app);
+const path = require('path');
 
 app.use(helmet());
 app.use(cors());
@@ -23,6 +24,9 @@ app.use(
     swaggerUi.serve, 
     swaggerUi.setup(swaggerDocument)
 );
+
+//serve as static the files from the public folder using path join
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Routes requirements
