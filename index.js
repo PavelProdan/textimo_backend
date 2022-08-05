@@ -29,6 +29,23 @@ app.use(
 );
 
 
+// Live playing object
+//declare an object to store the current playing song. This class have 2 properties: song_id and verse_number
+class LivePlayingManager {
+    constructor(song_id, verse_number) {
+        this.song_id = song_id;
+        this.verse_number = verse_number;
+    }
+
+    //implement an update method to update the song_id and the verse_number property of the object
+    update(song_id, verse_number) {
+        this.song_id = song_id;
+        this.verse_number = verse_number;
+    }
+}
+let livePlayingManager = new LivePlayingManager(0, 0);
+
+
 // Routes requirements
 const CheckForConnectionRoute = require("./routes/CheckForConnection.js");
 const songsRoute =  require("./routes/songs.js");
@@ -58,7 +75,7 @@ app.use("/reports", reportsRoute);
 app.use("/LivePage", LivePageRoute);
 
 
-// The following routes need socket io, so they doesn't use external modules
+// The following routes need socket io and LivePlayingManager, so they doesn't use external modules
 
 // declare a new post route for /project page that contains in body the following parameters: live_data, song_id, verse_number. Inside the route function we have to make sure that these variables are not empty. If they are empty, we have to return an error message.
 app.post("/projector", (req, res) => {
@@ -68,9 +85,24 @@ app.post("/projector", (req, res) => {
   }else{
     //emit data to socket io
     io.emit('livecontent', req.body.live_data);
+    //update the livePlayingManager object with the new song_id and verse_number
+    livePlayingManager.update(req.body.song_id, req.body.verse_number);
     res.sendStatus(200);
   }
+});
+
+//declare a new GET route for /now_playing. This route returns the current song_id and verse_number of the livePlayingManager object in JSON format
+app.get("/now_playing", (req, res) => {
+  res.json(livePlayingManager);
 } );
+
+//declare a new GET route for /stop_playing. This route stops the live playing and sets the song_id and verse_number of the livePlayingManager object to 0
+app.get("/stop_playing", (req, res) => {
+  io.emit('livecontent', "");
+  livePlayingManager.update(0, 0);
+  res.sendStatus(200);
+} );
+
 
 // Starting the server
 server.listen(port, () => {
