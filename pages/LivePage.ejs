@@ -3,14 +3,45 @@
 
 <head>
     <title>Textimo LivePage</title>
+
+    <style>
+        :root {
+        --gradient_color_one: #33ccff;
+        --gradient_color_two: #ff99cc; 
+        }
+
+        .background_gradient{
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            overflow: auto;
+            background: linear-gradient(to top right, var(--gradient_color_one) 0%, var(--gradient_color_two) 100%);
+        }
+    </style>
 </head>
 
-<body>
-    <p id="live_content"></p>
 
+<body>
+    <div class="background_gradient">
+        <p id="live_content"></p>
+
+        <button type="button" onclick="change_background_color('#ccff99', '#ccff99')">update colors</button>
+    </div>
+        
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
+        //page design
+        var root = document.querySelector(':root');
+        function change_background_color(color_one, color_two) {
+            root.style.setProperty('--gradient_color_one', color_one);
+            root.style.setProperty('--gradient_color_two', color_two);
+        }
+
+
+        //socket io
         var socket = io();
 
         //receive livecontent from socket and print the message in the console
