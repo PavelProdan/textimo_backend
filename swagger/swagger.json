@@ -1,838 +1,1031 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "description": "This is the REST API Documentation Page for Textimo Server",
-      "version": "1.0.0",
-      "title": "Textimo Server API",
-      "contact": {
-        "email": "prodanpavel05@gmail.com"
-      }
+  "swagger": "2.0",
+  "info": {
+    "description": "This is the REST API Documentation Page for Textimo Server",
+    "version": "1.0.0",
+    "title": "Textimo Server API",
+    "contact": {
+      "email": "prodanpavel05@gmail.com"
+    }
+  },
+  "host": "localhost:3000",
+  "tags": [
+    {
+      "name": "Song",
+      "description": "All available request related to Songs"
     },
-    "host": "localhost:3000",
-    "tags": [
-      {
-        "name": "Song",
-        "description": "All available request related to Songs"
-      },
-      {
-        "name": "Lyrics",
-        "description": "All available request related to lyrics (strofe)"
-      },
-      {
-        "name": "Projector (live)",
-        "description": "All available requests to manage the LivePage, for example projector module, clear LivePage or get current song"
-      },
-      {
-        "name": "View & Preview",
-        "description": "All available requests view or preview the lyrics of a specific song"
-      },
-      {
-        "name": "Connection",
-        "description": "Available request to check the connection status to server"
-      },
-      {
-        "name": "Reports",
-        "description": "All requests for Reports managment"
-      }
-    ],
-    "schemes": [
-      "http",
-      "https"
-    ],
-    "paths": {
-      "/songs": {
-        "get": {
-          "tags": [
-            "Song"
-          ],
-          "summary": "Get all songs from the database",
-          "description": "This route accepts paginations using URL query params: ?limit=2&offset=0 (pagination is not required)",
-          "operationId": "songs",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "success",
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Song"
-                }
-              }
-            },
-            "500": {
-              "description": "Eror"
-            }
-          }
-        }
-      },
-      "/add_song": {
-        "post": {
-          "tags": [
-            "Song"
-          ],
-          "summary": "Add new song in the database",
-          "description": "",
-          "operationId": "add_song",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "body",
-              "description": "Song object that need to be added",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/Song-ToBeAdded"
+    {
+      "name": "Lyrics",
+      "description": "All available request related to lyrics (strofe)"
+    },
+    {
+      "name": "Projector (live)",
+      "description": "All available requests to manage the LivePage, for example projector module, clear LivePage or get current song"
+    },
+    {
+      "name": "View & Preview",
+      "description": "All available requests view or preview the lyrics of a specific song"
+    },
+    {
+      "name": "Connection",
+      "description": "Available request to check the connection status to server"
+    },
+    {
+      "name": "Reports",
+      "description": "All requests for Reports managment"
+    },
+    {
+      "name": "LivePage Layout",
+      "description": "All requests related to LivePage graphical layout"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/songs": {
+      "get": {
+        "tags": [
+          "Song"
+        ],
+        "summary": "Get all songs from the database",
+        "description": "This route accepts paginations using URL query params: ?limit=2&offset=0 (pagination is not required)",
+        "operationId": "songs",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Song"
               }
             }
-          ],
-          "responses": {
-            "200": {
-              "description": "success",
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Song"
-                }
-              }
-            },
-            "500": {
-              "description": "Eror"
-            }
-          }
-        }
-      },
-      "/song/{song_id}": {
-        "delete": {
-          "tags": [
-            "Song"
-          ],
-          "summary": "Delete a specific song by song_id",
-          "description": "",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "in": "path",
-              "name": "song_id",
-              "type": "string",
-              "required": true,
-              "description": "ID of the song that must be deleted."
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "success"
-            },
-            "400": {
-              "description": "The item that you try to delete doesn't exist"
-            },
-            "500": {
-              "description": "Eror"
-            }
-          }
-        },
-        "put": {
-          "tags": [
-            "Song"
-          ],
-          "summary": "Edit a specific song by song_id",
-          "description": "",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "in": "path",
-              "name": "song_id",
-              "type": "string",
-              "required": true,
-              "description": "ID of the song that must be deleted."
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "success"
-            },
-            "400": {
-              "description": "The item that you try to update doesn't exist"
-            },
-            "500": {
-              "description": "Eror"
-            }
-          }
-        },
-        "get": {
-          "tags": [
-            "Song"
-          ],
-          "summary": "Edit a specific song by song_id",
-          "description": "",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "in": "path",
-              "name": "song_id",
-              "type": "string",
-              "required": true,
-              "description": "ID of the song that must be deleted."
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "success"
-            },
-            "500": {
-              "description": "Eror"
-            }
-          }
-        }
-      },
-      "/add_lyrics/{song_id}": {
-        "post": {
-          "tags": [
-            "Lyrics"
-          ],
-          "summary": "Add a new verse to Lyrics DB and append it to a song_id",
-          "description": "",
-          "operationId": "add_lyrics",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "body",
-              "description": "New lyrics object",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/Lyrics-ToBeAdded"
-              }
-            },
-            {
-              "in": "path",
-              "name": "song_id",
-              "type": "string",
-              "required": true,
-              "description": "ID of the song."
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "success",
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Lyrics-returned"
-                }
-              }
-            },
-            "500": {
-              "description": "Eror"
-            }
-          }
-        }
-      },
-      "/preview/{song_id}/all": {
-        "get": {
-          "tags": [
-            "View & Preview"
-          ],
-          "summary": "Get all lyrics asociated to the given song_id",
-          "description": "",
-          "operationId": "preview_all",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "in": "path",
-              "name": "song_id",
-              "type": "string",
-              "required": true,
-              "description": "ID of the song"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "success",
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Lyrics-multiple"
-                }
-              }
-            },
-            "400": {
-              "description": "The given song_id is invalid or doesn't exist"
-            },
-            "500": {
-              "description": "Eror"
-            }
-          }
-        }
-      },
-      "/preview/{song_id}/{verse_number}": {
-        "get": {
-          "tags": [
-            "View & Preview"
-          ],
-          "summary": "Get one specific lyrics asociated to the given song_id",
-          "description": "",
-          "operationId": "preview_specific",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "in": "path",
-              "name": "song_id",
-              "type": "string",
-              "required": true,
-              "description": "ID of the song"
-            },
-            {
-              "in": "path",
-              "name": "verse_number",
-              "type": "string",
-              "required": true,
-              "description": "The number of the verse you want to retrieve"
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "success",
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Lyrics-returned"
-                }
-              }
-            },
-            "400": {
-              "description": "The given song_id is invalid or doesn't exist"
-            },
-            "500": {
-              "description": "Eror"
-            }
-          }
-        }
-      },
-      "/CheckForConnection": {
-        "get": {
-          "tags": [
-            "Connection"
-          ],
-          "summary": "Check the connection between Client and Textimo Server",
-          "description": "",
-          "operationId": "checkforconnection",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "connected"
-            }
-          }
-        }
-      },
-      "/add_report": {
-        "get": {
-          "tags": [
-            "Reports"
-          ],
-          "summary": "Add a new report (problem related to lyrics)",
-          "description": "",
-          "operationId": "add_report",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "body",
-              "description": "New lyrics object",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/Report-ToBeAdded"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "success",
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Report-returned"
-                }
-              }
-            },
-            "500": {
-              "description": "Eror"
-            }
-          }
-        }
-      },
-      "/reports": {
-        "get": {
-          "tags": [
-            "Reports"
-          ],
-          "summary": "Retrieve all reports or edit a report",
-          "description": "",
-          "operationId": "reports",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "success",
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/Report-multiple"
-                }
-              }
-            },
-            "400": {
-              "description": "The Reports database is empty (0 results)"
-            },
-            "500": {
-              "description": "Eror"
-            }
-          }
-        },
-        "put": {
-          "tags": [
-            "Reports"
-          ],
-          "summary": "Update the status of a specific report",
-          "description": "",
-          "operationId": "report_update",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "body",
-              "description": "Report object that will be updated",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/ReportUpdate"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "success"
-            },
-            "400": {
-              "description": "The report_id that you're trying to update is invalid or doesn't exist"
-            },
-            "500": {
-              "description": "Eror"
-            }
-          }
-        }
-      },
-      "/now_playing": {
-        "get": {
-          "tags": [
-            "Projector (live)"
-          ],
-          "summary": "Get the song_id and the verse_number from the current displayed song on the LivePage",
-          "description": "",
-          "operationId": "now_playing",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "success",
-              "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/definitions/NowPlaying"
-                }
-              }
-            },
-            "500": {
-              "description": "Eror"
-            }
-          }
-        }
-      },
-      "/stop_playing": {
-        "get": {
-          "tags": [
-            "Projector (live)"
-          ],
-          "summary": "Stop the live streaming and clear the content from LivePage",
-          "description": "",
-          "operationId": "stop_playing",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "500": {
-              "description": "Eror"
-            }
-          }
-        }
-      },
-      "/projector": {
-        "post": {
-          "tags": [
-            "Projector (live)"
-          ],
-          "summary": "Send data to the LivePage",
-          "description": "",
-          "operationId": "project",
-          "consumes": [
-            "application/json"
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "parameters": [
-            {
-              "in": "body",
-              "name": "body",
-              "description": "Data to be sent to the LivePage",
-              "required": true,
-              "schema": {
-                "$ref": "#/definitions/Projector"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
-              "description": "OK"
-            },
-            "500": {
-              "description": "Eror"
-            }
+          },
+          "500": {
+            "description": "Eror"
           }
         }
       }
     },
-    "definitions": {
-      "Song": {
-        "type": "object",
-        "required": [
-          "song_title",
-          "total_num_lyrics"
+    "/add_song": {
+      "post": {
+        "tags": [
+          "Song"
         ],
-        "properties": {
-          "song_title": {
-            "type": "string",
-            "example": "Example song number x"
-          },
-          "total_num_lyrics": {
-            "type": "integer",
-            "example": "4"
-          },
-          "_id": {
-            "type": "string"
-          }
-        },
-        "xml": {
-          "name": "Song"
-        }
-      },
-      "Song-ToBeAdded": {
-        "type": "object",
-        "required": [
-          "song_title",
-          "total_num_lyrics"
+        "summary": "Add new song in the database",
+        "description": "",
+        "operationId": "add_song",
+        "consumes": [
+          "application/json"
         ],
-        "properties": {
-          "song_title": {
-            "type": "string",
-            "example": "Example song number x"
-          },
-          "total_num_lyrics": {
-            "type": "integer",
-            "example": "4"
-          }
-        },
-        "xml": {
-          "name": "Song-ToBeAdded"
-        }
-      },
-      "Lyrics-ToBeAdded": {
-        "type": "object",
-        "required": [
-          "lyrics_text",
-          "verse_number"
+        "produces": [
+          "application/json"
         ],
-        "properties": {
-          "lyrics_text": {
-            "type": "string",
-            "example": "Example vers vers vers number 1"
-          },
-          "verse_number": {
-            "type": "integer",
-            "example": "1"
-          }
-        },
-        "xml": {
-          "name": "Lyrics-ToBeAdded"
-        }
-      },
-      "Lyrics-returned": {
-        "type": "object",
-        "properties": {
-          "song_id": {
-            "type": "string",
-            "example": "song_id"
-          },
-          "lyrics_text": {
-            "type": "string",
-            "example": "Example vers vers vers number 1"
-          },
-          "verse_number": {
-            "type": "integer",
-            "example": "1"
-          },
-          "_id": {
-            "type": "string",
-            "example": "verse _id"
-          }
-        },
-        "xml": {
-          "name": "Lyrics-returned"
-        }
-      },
-      "Lyrics-multiple": {
-        "type": "array",
-        "items": {
-          "$ref": "#/definitions/Lyrics-returned"
-        },
-        "example": [
+        "parameters": [
           {
-            "song_id": "songID1",
-            "lyrics_text": "verse vers verse 1",
-            "verse_number": 1,
-            "_id": "lyricsID1"
+            "in": "body",
+            "name": "body",
+            "description": "Song object that need to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Song-ToBeAdded"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Song"
+              }
+            }
           },
+          "500": {
+            "description": "Eror"
+          }
+        }
+      }
+    },
+    "/song/{song_id}": {
+      "delete": {
+        "tags": [
+          "Song"
+        ],
+        "summary": "Delete a specific song by song_id",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
           {
-            "song_id": "songID2",
-            "lyrics_text": "verse vers verse 2",
-            "verse_number": 2,
-            "_id": "lyricsID2"
+            "in": "path",
+            "name": "song_id",
+            "type": "string",
+            "required": true,
+            "description": "ID of the song that must be deleted."
           }
         ],
-        "xml": {
-          "name": "Lyrics-multiple"
-        }
-      },
-      "Report-ToBeAdded": {
-        "type": "object",
-        "required": [
-          "song_id",
-          "verse_number",
-          "report_text",
-          "report_status"
-        ],
-        "properties": {
-          "song_id": {
-            "type": "string",
-            "example": "song_id"
+        "responses": {
+          "200": {
+            "description": "success"
           },
-          "verse_number": {
-            "type": "integer",
-            "example": "1"
+          "400": {
+            "description": "The item that you try to delete doesn't exist"
           },
-          "report_text": {
-            "type": "string",
-            "example": "ultimul vers are o problema"
-          },
-          "report_status": {
-            "type": "string",
-            "example": "Deschis"
+          "500": {
+            "description": "Eror"
           }
-        },
-        "xml": {
-          "name": "Lyrics-returned"
         }
       },
-      "Report-returned": {
-        "type": "object",
-        "required": [
-          "song_id",
-          "verse_number",
-          "report_text",
-          "report_status"
+      "put": {
+        "tags": [
+          "Song"
         ],
-        "properties": {
-          "song_id": {
-            "type": "string",
-            "example": "song_id"
-          },
-          "verse_number": {
-            "type": "integer",
-            "example": "1"
-          },
-          "report_text": {
-            "type": "string",
-            "example": "ultimul vers are o problema"
-          },
-          "report_status": {
-            "type": "string",
-            "example": "Deschis"
-          },
-          "_id": {
-            "type": "string",
-            "example": "new added report _id"
-          }
-        },
-        "xml": {
-          "name": "Lyrics-returned"
-        }
-      },
-      "ReportUpdate": {
-        "type": "object",
-        "required": [
-          "report_id",
-          "report_status"
+        "summary": "Edit a specific song by song_id",
+        "description": "",
+        "consumes": [
+          "application/json"
         ],
-        "properties": {
-          "report_id": {
-            "type": "string",
-            "example": "report_id"
-          },
-          "report_status": {
-            "type": "string",
-            "example": "REZOLVAT"
-          }
-        },
-        "xml": {
-          "name": "Lyrics-returned"
-        }
-      },
-      "Report-multiple": {
-        "type": "array",
-        "items": {
-          "$ref": "#/definitions/Report-returned"
-        },
-        "example": [
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
           {
-            "song_id": "song_id_1",
-            "verse_number": 1,
-            "report_text": "problema la sfarsitul primului vers",
-            "report_status": "Deschis",
-            "_id": "report_id_1"
+            "in": "path",
+            "name": "song_id",
+            "type": "string",
+            "required": true,
+            "description": "ID of the song that must be deleted."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "400": {
+            "description": "The item that you try to update doesn't exist"
+          },
+          "500": {
+            "description": "Eror"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Song"
+        ],
+        "summary": "Edit a specific song by song_id",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "song_id",
+            "type": "string",
+            "required": true,
+            "description": "ID of the song that must be deleted."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "500": {
+            "description": "Eror"
+          }
+        }
+      }
+    },
+    "/add_lyrics/{song_id}": {
+      "post": {
+        "tags": [
+          "Lyrics"
+        ],
+        "summary": "Add a new verse to Lyrics DB and append it to a song_id",
+        "description": "",
+        "operationId": "add_lyrics",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "New lyrics object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Lyrics-ToBeAdded"
+            }
           },
           {
-            "song_id": "song_id_2",
-            "verse_number": 2,
-            "report_text": "problema la sfarsitul primului vers vers",
-            "report_status": "Inchis",
-            "_id": "report_id_2"
+            "in": "path",
+            "name": "song_id",
+            "type": "string",
+            "required": true,
+            "description": "ID of the song."
           }
         ],
-        "xml": {
-          "name": "Lyrics-multiple"
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Lyrics-returned"
+              }
+            }
+          },
+          "500": {
+            "description": "Eror"
+          }
+        }
+      }
+    },
+    "/preview/{song_id}/all": {
+      "get": {
+        "tags": [
+          "View & Preview"
+        ],
+        "summary": "Get all lyrics asociated to the given song_id",
+        "description": "",
+        "operationId": "preview_all",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "song_id",
+            "type": "string",
+            "required": true,
+            "description": "ID of the song"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Lyrics-multiple"
+              }
+            }
+          },
+          "400": {
+            "description": "The given song_id is invalid or doesn't exist"
+          },
+          "500": {
+            "description": "Eror"
+          }
+        }
+      }
+    },
+    "/preview/{song_id}/{verse_number}": {
+      "get": {
+        "tags": [
+          "View & Preview"
+        ],
+        "summary": "Get one specific lyrics asociated to the given song_id",
+        "description": "",
+        "operationId": "preview_specific",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "song_id",
+            "type": "string",
+            "required": true,
+            "description": "ID of the song"
+          },
+          {
+            "in": "path",
+            "name": "verse_number",
+            "type": "string",
+            "required": true,
+            "description": "The number of the verse you want to retrieve"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Lyrics-returned"
+              }
+            }
+          },
+          "400": {
+            "description": "The given song_id is invalid or doesn't exist"
+          },
+          "500": {
+            "description": "Eror"
+          }
+        }
+      }
+    },
+    "/CheckForConnection": {
+      "get": {
+        "tags": [
+          "Connection"
+        ],
+        "summary": "Check the connection between Client and Textimo Server",
+        "description": "",
+        "operationId": "checkforconnection",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "connected"
+          }
+        }
+      }
+    },
+    "/add_report": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Add a new report (problem related to lyrics)",
+        "description": "",
+        "operationId": "add_report",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "New lyrics object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Report-ToBeAdded"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Report-returned"
+              }
+            }
+          },
+          "500": {
+            "description": "Eror"
+          }
+        }
+      }
+    },
+    "/reports": {
+      "get": {
+        "tags": [
+          "Reports"
+        ],
+        "summary": "Retrieve all reports or edit a report",
+        "description": "",
+        "operationId": "reports",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Report-multiple"
+              }
+            }
+          },
+          "400": {
+            "description": "The Reports database is empty (0 results)"
+          },
+          "500": {
+            "description": "Eror"
+          }
         }
       },
-      "NowPlaying": {
-        "type": "object",
-        "required": [
-          "song_id",
-          "verse_number"
+      "put": {
+        "tags": [
+          "Reports"
         ],
-        "properties": {
-          "song_id": {
-            "type": "string",
-            "example": "song_id"
-          },
-          "verse_number": {
-            "type": "string",
-            "example": "2"
+        "summary": "Update the status of a specific report",
+        "description": "",
+        "operationId": "report_update",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Report object that will be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReportUpdate"
+            }
           }
-        },
-        "xml": {
-          "name": "NowPlaying"
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "400": {
+            "description": "The report_id that you're trying to update is invalid or doesn't exist"
+          },
+          "500": {
+            "description": "Eror"
+          }
         }
-      },
-      "Projector": {
-        "type": "object",
-        "required": [
-          "live_data",
-          "song_id",
-          "verse_number"
+      }
+    },
+    "/now_playing": {
+      "get": {
+        "tags": [
+          "Projector (live)"
         ],
-        "properties": {
-          "live_data": {
-            "type": "string",
-            "example": "Strofa propriu-zisa: vers vers 1 verse vers 2.."
+        "summary": "Get the song_id and the verse_number from the current displayed song on the LivePage",
+        "description": "",
+        "operationId": "now_playing",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/NowPlaying"
+              }
+            }
           },
-          "song_id": {
-            "type": "string",
-            "example": "song_id"
-          },
-          "verse_number": {
-            "type": "string",
-            "example": "2"
+          "500": {
+            "description": "Eror"
           }
-        },
-        "xml": {
-          "name": "NowPlaying"
+        }
+      }
+    },
+    "/stop_playing": {
+      "get": {
+        "tags": [
+          "Projector (live)"
+        ],
+        "summary": "Stop the live streaming and clear the content from LivePage",
+        "description": "",
+        "operationId": "stop_playing",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Eror"
+          }
+        }
+      }
+    },
+    "/projector": {
+      "post": {
+        "tags": [
+          "Projector (live)"
+        ],
+        "summary": "Send data to the LivePage",
+        "description": "",
+        "operationId": "project",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Data to be sent to the LivePage",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Projector"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Eror"
+          }
+        }
+      }
+    },
+    "/get_livepage_settings": {
+      "get": {
+        "tags": [
+          "LivePage Layout"
+        ],
+        "summary": "Get the current LivePage configuration",
+        "description": "",
+        "operationId": "get_livepage_settings",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/livepage_settings_returned"
+              }
+            }
+          },
+          "500": {
+            "description": "Eror"
+          }
+        }
+      }
+    },
+    "/save_livepage_settings": {
+      "post": {
+        "tags": [
+          "LivePage Layout"
+        ],
+        "summary": "Save the new LivePage configuration",
+        "description": "Fields content explained: -the color fields should contain the HEX color codes   -the size/padding should contain an integer expressed in px(20 for 20px in style)   -showTitle and Strofa: yer/no",
+        "operationId": "save_page_layout",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "The LivePage configuration object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/livepage_settings_sent"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "500": {
+            "description": "Eror"
+          }
+        }
+      }
+    },
+    "/refresh_livepage": {
+      "get": {
+        "tags": [
+          "LivePage Layout"
+        ],
+        "summary": "Refresh the livepage and load the new configuration",
+        "description": "",
+        "operationId": "update_livepage_settings",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          },
+          "500": {
+            "description": "Eror"
+          }
         }
       }
     }
+  },
+  "definitions": {
+    "Song": {
+      "type": "object",
+      "required": [
+        "song_title",
+        "total_num_lyrics"
+      ],
+      "properties": {
+        "song_title": {
+          "type": "string",
+          "example": "Example song number x"
+        },
+        "total_num_lyrics": {
+          "type": "integer",
+          "example": "4"
+        },
+        "_id": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "Song"
+      }
+    },
+    "Song-ToBeAdded": {
+      "type": "object",
+      "required": [
+        "song_title",
+        "total_num_lyrics"
+      ],
+      "properties": {
+        "song_title": {
+          "type": "string",
+          "example": "Example song number x"
+        },
+        "total_num_lyrics": {
+          "type": "integer",
+          "example": "4"
+        }
+      },
+      "xml": {
+        "name": "Song-ToBeAdded"
+      }
+    },
+    "Lyrics-ToBeAdded": {
+      "type": "object",
+      "required": [
+        "lyrics_text",
+        "verse_number"
+      ],
+      "properties": {
+        "lyrics_text": {
+          "type": "string",
+          "example": "Example vers vers vers number 1"
+        },
+        "verse_number": {
+          "type": "integer",
+          "example": "1"
+        }
+      },
+      "xml": {
+        "name": "Lyrics-ToBeAdded"
+      }
+    },
+    "Lyrics-returned": {
+      "type": "object",
+      "properties": {
+        "song_id": {
+          "type": "string",
+          "example": "song_id"
+        },
+        "lyrics_text": {
+          "type": "string",
+          "example": "Example vers vers vers number 1"
+        },
+        "verse_number": {
+          "type": "integer",
+          "example": "1"
+        },
+        "_id": {
+          "type": "string",
+          "example": "verse _id"
+        }
+      },
+      "xml": {
+        "name": "Lyrics-returned"
+      }
+    },
+    "Lyrics-multiple": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Lyrics-returned"
+      },
+      "example": [
+        {
+          "song_id": "songID1",
+          "lyrics_text": "verse vers verse 1",
+          "verse_number": 1,
+          "_id": "lyricsID1"
+        },
+        {
+          "song_id": "songID2",
+          "lyrics_text": "verse vers verse 2",
+          "verse_number": 2,
+          "_id": "lyricsID2"
+        }
+      ],
+      "xml": {
+        "name": "Lyrics-multiple"
+      }
+    },
+    "Report-ToBeAdded": {
+      "type": "object",
+      "required": [
+        "song_id",
+        "verse_number",
+        "report_text",
+        "report_status"
+      ],
+      "properties": {
+        "song_id": {
+          "type": "string",
+          "example": "song_id"
+        },
+        "verse_number": {
+          "type": "integer",
+          "example": "1"
+        },
+        "report_text": {
+          "type": "string",
+          "example": "ultimul vers are o problema"
+        },
+        "report_status": {
+          "type": "string",
+          "example": "Deschis"
+        }
+      },
+      "xml": {
+        "name": "Lyrics-returned"
+      }
+    },
+    "Report-returned": {
+      "type": "object",
+      "required": [
+        "song_id",
+        "verse_number",
+        "report_text",
+        "report_status"
+      ],
+      "properties": {
+        "song_id": {
+          "type": "string",
+          "example": "song_id"
+        },
+        "verse_number": {
+          "type": "integer",
+          "example": "1"
+        },
+        "report_text": {
+          "type": "string",
+          "example": "ultimul vers are o problema"
+        },
+        "report_status": {
+          "type": "string",
+          "example": "Deschis"
+        },
+        "_id": {
+          "type": "string",
+          "example": "new added report _id"
+        }
+      },
+      "xml": {
+        "name": "Lyrics-returned"
+      }
+    },
+    "livepage_settings_returned": {
+      "type": "object",
+      "properties": {
+        "bg_gradient_color_one": {
+          "type": "string",
+          "example": "#33ccff"
+        },
+        "bg_gradient_color_two": {
+          "type": "string",
+          "example": "#33ccff"
+        },
+        "font_size": {
+          "type": "integer",
+          "example": "20"
+        },
+        "font_color": {
+          "type": "string",
+          "example": "#000000"
+        },
+        "font_family": {
+          "type": "string",
+          "example": "Arial, Helvetica, sans-serif"
+        },
+        "text_align": {
+          "type": "string",
+          "example": "center"
+        },
+        "showTitle": {
+          "type": "string",
+          "example": "yes"
+        },
+        "showCurrentStrofaNumber": {
+          "type": "string",
+          "example": "yes"
+        },
+        "padding_left": {
+          "type": "integer",
+          "example": "15"
+        },
+        "padding_bottom": {
+          "type": "integer",
+          "example": "15"
+        },
+        "css_content": {
+          "type": "string",
+          "example": "this is the css content that is automatically generated by the server"
+        }
+      },
+      "xml": {
+        "name": "Lyrics-returned"
+      }
+    },
+    "livepage_settings_sent": {
+      "type": "object",
+      "properties": {
+        "bg_gradient_color_one": {
+          "type": "string",
+          "example": "#33ccff"
+        },
+        "bg_gradient_color_two": {
+          "type": "string",
+          "example": "#33ccff"
+        },
+        "font_size": {
+          "type": "integer",
+          "example": "20"
+        },
+        "font_color": {
+          "type": "string",
+          "example": "#000000"
+        },
+        "font_family": {
+          "type": "string",
+          "example": "Arial, Helvetica, sans-serif"
+        },
+        "text_align": {
+          "type": "string",
+          "example": "center"
+        },
+        "showTitle": {
+          "type": "string",
+          "example": "yes"
+        },
+        "showCurrentStrofaNumber": {
+          "type": "string",
+          "example": "yes"
+        },
+        "padding_left": {
+          "type": "integer",
+          "example": "15"
+        },
+        "padding_bottom": {
+          "type": "integer",
+          "example": "15"
+        }
+      },
+      "xml": {
+        "name": "Lyrics-returned"
+      }
+    },
+    "ReportUpdate": {
+      "type": "object",
+      "required": [
+        "report_id",
+        "report_status"
+      ],
+      "properties": {
+        "report_id": {
+          "type": "string",
+          "example": "report_id"
+        },
+        "report_status": {
+          "type": "string",
+          "example": "REZOLVAT"
+        }
+      },
+      "xml": {
+        "name": "Lyrics-returned"
+      }
+    },
+    "Report-multiple": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Report-returned"
+      },
+      "example": [
+        {
+          "song_id": "song_id_1",
+          "verse_number": 1,
+          "report_text": "problema la sfarsitul primului vers",
+          "report_status": "Deschis",
+          "_id": "report_id_1"
+        },
+        {
+          "song_id": "song_id_2",
+          "verse_number": 2,
+          "report_text": "problema la sfarsitul primului vers vers",
+          "report_status": "Inchis",
+          "_id": "report_id_2"
+        }
+      ],
+      "xml": {
+        "name": "Lyrics-multiple"
+      }
+    },
+    "NowPlaying": {
+      "type": "object",
+      "required": [
+        "song_id",
+        "verse_number"
+      ],
+      "properties": {
+        "song_id": {
+          "type": "string",
+          "example": "song_id"
+        },
+        "verse_number": {
+          "type": "string",
+          "example": "2"
+        }
+      },
+      "xml": {
+        "name": "NowPlaying"
+      }
+    },
+    "Projector": {
+      "type": "object",
+      "required": [
+        "live_data",
+        "song_id",
+        "verse_number"
+      ],
+      "properties": {
+        "live_data": {
+          "type": "string",
+          "example": "Strofa propriu-zisa: vers vers 1 verse vers 2.."
+        },
+        "song_id": {
+          "type": "string",
+          "example": "song_id"
+        },
+        "verse_number": {
+          "type": "string",
+          "example": "2"
+        }
+      },
+      "xml": {
+        "name": "NowPlaying"
+      }
+    }
   }
+}
