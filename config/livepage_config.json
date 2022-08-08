@@ -1,5 +1,13 @@
-//
-
-// bg-gradient_color_one, bg-gradient_color_two
-// font_size, font_color, font_family, text_align
-// showTitle, showCurrentStrofaNumber
+{
+    "bg-gradient_color_one": "#33ccff",
+    "bg-gradient_color_two": "#ff99cc",
+    "font_size": "20",
+    "font_color": "#000000",
+    "font_family": "Arial, Helvetica, sans-serif",
+    "text_align": "middle",
+    "showTitle": true,
+    "showCurrentStrofaNumber": false,
+    "padding_left": "10",
+    "padding_bottom": "10",
+    "css_content": "this is the generated "
+}
