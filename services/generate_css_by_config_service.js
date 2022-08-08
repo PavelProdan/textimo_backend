@@ -16,13 +16,15 @@ function generate_css_content(livepage_settings) {
 
     // add the background_gradient css class
     css_content += `
-    position: fixed;
+    .background_gradient{
+            position: fixed;
             top: 0;
             left: 0;
             bottom: 0;
             right: 0;
             overflow: auto;
             background: linear-gradient(to top right, var(--gradient_color_one) 0%, var(--gradient_color_two) 100%);
+    }
     `;
 
     if(livepage_settings["text-align"] == "middle"){
