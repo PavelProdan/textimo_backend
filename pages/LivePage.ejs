@@ -4,30 +4,22 @@
 <head>
     <title>Textimo LivePage</title>
 
-    <style> <%= styles %> /**/</style>
+    <%- "<style>" %>
+         <%= styles %>
+    <%- "</style>" %>
 </head>
 
 
 <body>
     <div class="background_gradient align-content-middle">
-        <h2 id="song_title" class="align-content-class">Song title</h2>
-        <p id="live_content" class="align-content-class"></p>
-        <h3 id="current_verse_number" class="align-content-class">3</h3>
-
-        <button type="button" onclick="change_background_color('#ccff99', '#ccff99')">update colors</button>
+        <h2 id="song_title" class="align-content-class title-style-class">Song title</h2>
+        <p id="live_content" class="align-content-class text-style-class"></p>
+        <h3 id="current_verse_number" class="align-content-class text-style-class verse-nb-class">3</h3>
     </div>
         
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        //page design
-        var root = document.querySelector(':root');
-        function change_background_color(color_one, color_two) {
-            root.style.setProperty('--gradient_color_one', color_one);
-            root.style.setProperty('--gradient_color_two', color_two);
-        }
-
-
         //socket io
         var socket = io();
 
@@ -36,7 +28,11 @@
             document.getElementById("live_content").innerHTML = data;
         });
 
+        //receive the refresh page signal from socket and refresh the page
+        socket.on('refresh_livepage', function(data) {
+            location.reload();
+        });
+
     </script>
 </body>
-
 </html>

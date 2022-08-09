@@ -101,6 +101,12 @@ app.get("/stop_playing", (req, res) => {
   res.sendStatus(200);
 } );
 
+//declare a new GET route for /refresh_livepage. This route sends a refresh signal to the live page
+app.get("/refresh_livepage", (req, res) => {
+  io.emit('refresh_livepage', "");
+  res.sendStatus(200);
+} );
+
 
 // Starting the server
 server.listen(port, () => {
