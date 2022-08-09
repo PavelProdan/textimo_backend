@@ -12,6 +12,7 @@ const server = http.createServer(app);
 const path = require('path');
 const { Server } = require("socket.io");
 const io = new Server(server);
+const restore_live_content_service = require("./services/restore_live_content_service.js");
 
 //app.use(helmet());
 app.use(cors());
@@ -104,6 +105,7 @@ app.get("/stop_playing", (req, res) => {
 //declare a new GET route for /refresh_livepage. This route sends a refresh signal to the live page
 app.get("/refresh_livepage", (req, res) => {
   io.emit('refresh_livepage', "");
+  restore_live_content_service();
   res.sendStatus(200);
 } );
 
