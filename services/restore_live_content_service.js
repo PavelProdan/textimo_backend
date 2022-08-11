@@ -6,40 +6,52 @@
 const config = require("../config/config.js");
 const axios = require("axios");
 
-module.exports = function () {
-// make a request to the /now_playing route and obtain the current song_id and verse_number
-axios.get(config.api_url + "/now_playing")
-    .then(response => {
-        // make a request to the /preview route with the song_id and verse_number obtained from the /now_playing route
-        axios.get(config.api_url + `/preview/${response.data.song_id}/${response.data.verse_number}`)
-            .then(response => {
-                // "song_id": "song_id",
-                // "lyrics_text": "Example vers vers vers number 1",
-                // "verse_number": 1,
-                // "_id": "verse _id"
-                // send the response in body to the post request to /projector route
-                axios.post(config.api_url + "/projector", {
-                    live_data: response.data.lyrics_text,
-                    song_id: response.data.song_id,
-                    verse_number: response.data.verse_number
-                })
-                    .then(response => {
-                        console.log("Live content sent to the projector");
-                    }).catch(error => {
-                        console.log(error);
-                    }).finally(() => {
-                        console.log("Live content sent to the projector");
-                    }
-                );
-            }).catch(error => {
-                console.log(error);
-            }).finally(() => {
-                console.log("Live content sent to the projector");
-            }
-        );
+async function getIDandVerseNumber() {
+    return axios({
+        method: 'get',
+        url: config.api_url + "/now_playing"
+    }).then(response => {
+        return response.data;
+    }).catch(error => {
+        console.log(error);
+    });
+}
+
+async function getLyricsText(song_id, verse_number) {
+    return axios({
+        method: 'get',
+        url: config.api_url + "/preview/" + song_id + "/" + verse_number
+    }).then(response => {
+        return response.data;
     }).catch(error => {
         console.log(error);
     }
-);
+    );
+}
 
+async function restart_projector(song_id, verse_number, live_content) {
+    return axios({
+        method: 'post',
+        url: config.api_url + "/projector",
+        data: {
+            live_data: live_content,
+            song_id: song_id,
+            verse_number: verse_number
+        }
+    }).then(response => {
+        return response.data;
+    }).catch(error => {
+        console.log(error);
+    }
+    );
+}
+
+
+module.exports = async () => {
+    let idAndVerseNumber = await getIDandVerseNumber();
+    let lyricsText = await getLyricsText(idAndVerseNumber.song_id, idAndVerseNumber.verse_number);
+    var json = JSON.parse(JSON.stringify(lyricsText));
+    for (var i = 0; i < json.length; i++) {
+        restart_projector(idAndVerseNumber.song_id, idAndVerseNumber.verse_number, json[i].lyrics_text);
+    }
 };

@@ -30,7 +30,9 @@
 
         //receive the refresh page signal from socket and refresh the page
         socket.on('refresh_livepage', function(data) {
-            location.reload();
+            if (data == "begin refresh") {
+                location.reload();
+            }
         });
 
     </script>

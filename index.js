@@ -82,10 +82,11 @@ app.post("/projector", (req, res) => {
   if(!req.body.live_data || !req.body.song_id || !req.body.verse_number){
     res.sendStatus(500);
   }else{
-    //emit data to socket io
-    io.emit('livecontent', req.body.live_data);
     //update the livePlayingManager object with the new song_id and verse_number
     livePlayingManager.update(req.body.song_id, req.body.verse_number);
+    
+    //emit data to socket io
+    io.emit('livecontent', req.body.live_data);
     res.sendStatus(200);
   }
 });
@@ -104,8 +105,12 @@ app.get("/stop_playing", (req, res) => {
 
 //declare a new GET route for /refresh_livepage. This route sends a refresh signal to the live page
 app.get("/refresh_livepage", (req, res) => {
-  io.emit('refresh_livepage', "");
-  restore_live_content_service();
+  io.emit('refresh_livepage', "begin refresh");
+  // wait for page to refresh
+  io.on('connection', (socket) => {
+    restore_live_content_service();
+  });
+  
   res.sendStatus(200);
 } );
 
