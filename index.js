@@ -13,6 +13,7 @@ const path = require('path');
 const { Server } = require("socket.io");
 const io = new Server(server);
 const restore_live_content_service = require("./services/restore_live_content_service.js");
+const get_title_by_songID_service = require("./services/get_title_by_songID_service.js");
 
 //app.use(helmet());
 app.use(cors());
@@ -84,9 +85,14 @@ app.post("/projector", (req, res) => {
   }else{
     //update the livePlayingManager object with the new song_id and verse_number
     livePlayingManager.update(req.body.song_id, req.body.verse_number);
-    
-    //emit data to socket io
-    io.emit('livecontent', req.body.live_data);
+    let title = get_title_by_songID_service(req.body.song_id);
+    title.then(title => {
+      io.emit('livetitle', title);
+      io.emit('livecontent', req.body.live_data);
+    }).catch(error => {
+      console.log(error);
+    }
+    );
     res.sendStatus(200);
   }
 });
@@ -99,6 +105,7 @@ app.get("/now_playing", (req, res) => {
 //declare a new GET route for /stop_playing. This route stops the live playing and sets the song_id and verse_number of the livePlayingManager object to 0
 app.get("/stop_playing", (req, res) => {
   io.emit('livecontent', "");
+  io.emit('livetitle', "");
   livePlayingManager.update(0, 0);
   res.sendStatus(200);
 } );
@@ -110,7 +117,6 @@ app.get("/refresh_livepage", (req, res) => {
   io.on('connection', (socket) => {
     restore_live_content_service();
   });
-  
   res.sendStatus(200);
 } );
 

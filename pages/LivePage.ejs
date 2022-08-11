@@ -12,7 +12,7 @@
 
 <body>
     <div class="background_gradient align-content-middle">
-        <h2 id="song_title" class="align-content-class title-style-class">Song title</h2>
+        <h2 id="live_title" class="align-content-class title-style-class"></h2>
         <p id="live_content" class="align-content-class text-style-class"></p>
         <h3 id="current_verse_number" class="align-content-class text-style-class verse-nb-class">3</h3>
     </div>
@@ -26,6 +26,10 @@
         //receive livecontent from socket and print the message in the console
         socket.on('livecontent', function(data) {
             document.getElementById("live_content").innerHTML = data;
+        });
+
+        socket.on('livetitle', function(data) {
+            document.getElementById("live_title").innerHTML = data;
         });
 
         //receive the refresh page signal from socket and refresh the page
