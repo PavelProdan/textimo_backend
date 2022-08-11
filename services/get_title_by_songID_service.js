@@ -15,6 +15,10 @@ async function getTitlebySongID(song_id) {
 
 module.exports = async (song_id) => {
     let title = await getTitlebySongID(song_id);
+    let obj = {
+        title: title.song_title,
+        total_num_lyrics: title.total_num_lyrics
+    }
     
-    return title.song_title;
+    return obj;
 }

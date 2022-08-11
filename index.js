@@ -87,7 +87,7 @@ app.post("/projector", (req, res) => {
     livePlayingManager.update(req.body.song_id, req.body.verse_number);
     let title = get_title_by_songID_service(req.body.song_id);
     title.then(title => {
-      io.emit('livetitle', title);
+      io.emit('livetitle_verseNumber', {title: title.title, verse_number: req.body.verse_number, total_num_lyrics: title.total_num_lyrics});
       io.emit('livecontent', req.body.live_data);
     }).catch(error => {
       console.log(error);

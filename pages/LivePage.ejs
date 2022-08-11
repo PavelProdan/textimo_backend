@@ -14,7 +14,7 @@
     <div class="background_gradient align-content-middle">
         <h2 id="live_title" class="align-content-class title-style-class"></h2>
         <p id="live_content" class="align-content-class text-style-class"></p>
-        <h3 id="current_verse_number" class="align-content-class text-style-class verse-nb-class">3</h3>
+        <h3 id="current_verse_number" class="align-content-class text-style-class verse-nb-class"></h3>
     </div>
         
 
@@ -28,8 +28,9 @@
             document.getElementById("live_content").innerHTML = data;
         });
 
-        socket.on('livetitle', function(data) {
-            document.getElementById("live_title").innerHTML = data;
+        socket.on('livetitle_verseNumber', function(data) {
+            document.getElementById("live_title").innerHTML = data.title;
+            document.getElementById("current_verse_number").innerHTML = data.verse_number + " din " + data.total_num_lyrics;
         });
 
         //receive the refresh page signal from socket and refresh the page
