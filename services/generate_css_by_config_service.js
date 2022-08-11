@@ -73,6 +73,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 
         .verse-nb-class{
             display: ${showCurrentStrofaNumber_display};
+            font-weight: bold;
         }
     `;
 

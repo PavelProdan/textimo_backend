@@ -14,6 +14,7 @@ const { Server } = require("socket.io");
 const io = new Server(server);
 const restore_live_content_service = require("./services/restore_live_content_service.js");
 const get_title_by_songID_service = require("./services/get_title_by_songID_service.js");
+const live_manager_service = require("./services/live_manager_service.js");
 
 //app.use(helmet());
 app.use(cors());
@@ -45,8 +46,8 @@ class LivePlayingManager {
         this.verse_number = verse_number;
     }
 }
-let livePlayingManager = new LivePlayingManager(0, 0);
-
+//let livePlayingManager = new LivePlayingManager(0, 0);
+// liveplayingmanager now works with a database instead of a simple class
 
 // Routes requirements
 const CheckForConnectionRoute = require("./routes/CheckForConnection.js");
@@ -84,7 +85,10 @@ app.post("/projector", (req, res) => {
     res.sendStatus(500);
   }else{
     //update the livePlayingManager object with the new song_id and verse_number
-    livePlayingManager.update(req.body.song_id, req.body.verse_number);
+    //livePlayingManager.update(req.body.song_id, req.body.verse_number);
+    //update the live_manager_service
+    live_manager_service.update(req.body.song_id, req.body.verse_number);
+
     let title = get_title_by_songID_service(req.body.song_id);
     title.then(title => {
       io.emit('livetitle_verseNumber', {title: title.title, verse_number: req.body.verse_number, total_num_lyrics: title.total_num_lyrics});
@@ -99,14 +103,23 @@ app.post("/projector", (req, res) => {
 
 //declare a new GET route for /now_playing. This route returns the current song_id and verse_number of the livePlayingManager object in JSON format
 app.get("/now_playing", (req, res) => {
-  res.json(livePlayingManager);
+  //res.json(livePlayingManager);
+  //res(live_manager_service.now_playing());
+  doc = live_manager_service.now_playing();
+  doc.then(doc => {
+    res.json(doc);
+  }).catch(error => {
+    console.log(error);
+  }
+  );
 } );
 
 //declare a new GET route for /stop_playing. This route stops the live playing and sets the song_id and verse_number of the livePlayingManager object to 0
 app.get("/stop_playing", (req, res) => {
   io.emit('livecontent', "");
   io.emit('livetitle', "");
-  livePlayingManager.update(0, 0);
+  //livePlayingManager.update(0, 0);
+  live_manager_service.update(0, 0);
   res.sendStatus(200);
 } );
 
