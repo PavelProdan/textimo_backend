@@ -4,16 +4,22 @@ const router = express.Router();
 const app = express();
 const fs = require("fs");
 const ejs = require('ejs');
-
-// load the livepage_config.json file
-const livepage_config = JSON.parse(fs.readFileSync(path.join(__dirname, "../config/livepage_config.json"), "utf8"));
+const db = require("../services/db_loader.js");
 
 //use EJS as template engine for pages/LivePage.html
 app.set('view engine', 'ejs');
 app.engine('ejs', require('ejs').__express);
 
 router.get("/", (req, res) => {
-    res.render(path.join(__dirname, '../pages/livepage.ejs'),{ styles: livepage_config["css_content"] });     
+    db.livepage_config.findOne({ _id: "9kbWRY9acnSoazA5" }, (err, livepage_config) => {
+        if (err) {
+            console.log(err);
+            res.status(500).send(err);
+        } else {
+            //render the page with the css_content field from the livepage_config database
+            res.render(path.join(__dirname, '../pages/livepage.ejs'), { styles: livepage_config.css_content });
+        }
+    });
 });
 
 

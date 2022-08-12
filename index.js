@@ -6,23 +6,23 @@
 const express = require("express");
 const cors = require("cors");
 const http = require('http');
-const helmet =  require("helmet");
 const app = express();
 const server = http.createServer(app);
-const path = require('path');
 const { Server } = require("socket.io");
 const io = new Server(server);
 const restore_live_content_service = require("./services/restore_live_content_service.js");
 const get_title_by_songID_service = require("./services/get_title_by_songID_service.js");
 const live_manager_service = require("./services/live_manager_service.js");
 const init_livemanager_service = require("./services/init_livemanager_service.js");
+const init_livesettings_service = require("./services/init_livesettings_service.js");
 
-//app.use(helmet());
+
 app.use(cors());
 app.use(express.json()); 
 const { port } = require('./config/config.js');
 app.set('view engine', 'ejs');
 init_livemanager_service();
+init_livesettings_service();
 
 // Swagger
 const swaggerUi = require("swagger-ui-express"),

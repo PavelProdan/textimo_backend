@@ -8,6 +8,7 @@ const router = express.Router();
 const path = require("path");
 const fs = require("fs");
 const generate_css_by_config_service = require("../services/generate_css_by_config_service.js");
+const db = require("../services/db_loader.js");
 
 // process the post request
 router.post("/", (req, res) => {
@@ -30,14 +31,24 @@ router.post("/", (req, res) => {
         const css_content = generate_css_by_config_service(livepage_settings);
         livepage_settings["css_content"] = css_content;
 
-        // rewirte the livepage_config.json file with the new livepage settings
-        fs.writeFile(path.join(__dirname, "../config/livepage_config.json"), JSON.stringify(livepage_settings), (err) => {
+        // insert the object in livepage_config database using the _id field equals to 9kbWRY9acnSoazA5
+        db.livepage_config.update({ _id: "9kbWRY9acnSoazA5" }, livepage_settings, { upsert: true }, (err, numReplaced) => {
             if (err) {
                 console.log(err);
+                res.status(500).send(err);
+            } else {
+                res.send("success");
             }
         });
+
+        // rewirte the livepage_config.json file with the new livepage settings
+        // fs.writeFile(path.join(__dirname, "../config/livepage_config.json"), JSON.stringify(livepage_settings), (err) => {
+        //     if (err) {
+        //         console.log(err);
+        //     }
+        // });
         
-        res.send("success");
+        //res.send("success");
     }else{
         res.sendStatus(500);
     }
