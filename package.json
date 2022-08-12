@@ -9,6 +9,11 @@
   },
   "keywords": [],
   "author": "",
+  "pkg": {
+    "assets": ["pages/**/*", "config/**/*", "database/**/*"],
+    "targets": [ "node14-linux-arm64" ],
+    "outputPath": "dist"
+  },
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
