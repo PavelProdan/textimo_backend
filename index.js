@@ -32,23 +32,6 @@ app.use(
 );
 
 
-// Live playing object
-//declare an object to store the current playing song. This class have 2 properties: song_id and verse_number
-class LivePlayingManager {
-    constructor(song_id, verse_number) {
-        this.song_id = song_id;
-        this.verse_number = verse_number;
-    }
-
-    //implement an update method to update the song_id and the verse_number property of the object
-    update(song_id, verse_number) {
-        this.song_id = song_id;
-        this.verse_number = verse_number;
-    }
-}
-//let livePlayingManager = new LivePlayingManager(0, 0);
-// liveplayingmanager now works with a database instead of a simple class
-
 // Routes requirements
 const CheckForConnectionRoute = require("./routes/CheckForConnection.js");
 const songsRoute =  require("./routes/songs.js");
@@ -84,8 +67,6 @@ app.post("/projector", (req, res) => {
   if(!req.body.live_data || !req.body.song_id || !req.body.verse_number){
     res.sendStatus(500);
   }else{
-    //update the livePlayingManager object with the new song_id and verse_number
-    //livePlayingManager.update(req.body.song_id, req.body.verse_number);
     //update the live_manager_service
     live_manager_service.update(req.body.song_id, req.body.verse_number);
 
@@ -103,8 +84,6 @@ app.post("/projector", (req, res) => {
 
 //declare a new GET route for /now_playing. This route returns the current song_id and verse_number of the livePlayingManager object in JSON format
 app.get("/now_playing", (req, res) => {
-  //res.json(livePlayingManager);
-  //res(live_manager_service.now_playing());
   doc = live_manager_service.now_playing();
   doc.then(doc => {
     res.json(doc);
@@ -118,7 +97,6 @@ app.get("/now_playing", (req, res) => {
 app.get("/stop_playing", (req, res) => {
   io.emit('livecontent', "");
   io.emit('livetitle', "");
-  //livePlayingManager.update(0, 0);
   live_manager_service.update(0, 0);
   res.sendStatus(200);
 } );
