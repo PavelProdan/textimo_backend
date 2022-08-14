@@ -116,5 +116,6 @@ app.get("/refresh_livepage", (req, res) => {
 
 // Starting the server
 server.listen(port, () => {
+    console.log("===== TEXTIMO SERVER =====");
     console.log("Server is listening on port " + port);
 });
