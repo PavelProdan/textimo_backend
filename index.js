@@ -84,6 +84,7 @@ app.post("/projector", (req, res) => {
   }
 });
 
+
 //declare a new GET route for /now_playing. This route returns the current song_id and verse_number of the livePlayingManager object in JSON format
 app.get("/now_playing", (req, res) => {
   doc = live_manager_service.now_playing();
