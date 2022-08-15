@@ -8,8 +8,6 @@
 
 ![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white)
 
-![Flutter](https://camo.githubusercontent.com/3dbcfa4997505c80ef928681b291d33ecfac2dabf563eb742bb3e269a5af909c/68747470733a2f2f696d672e736869656c64732e696f2f6769746875622f6c6963656e73652f496c65726961796f2f6d61726b646f776e2d6261646765733f7374796c653d666f722d7468652d6261646765)
-
 # About Textimo
 
 Textimo is a software solution designed to stream live lyrics to a video projector without a laptop, by simply connecting a Raspberry Pi to the video projector. Raspbian is configured to be plug and play: you just have to power up the Raspberry and connect the HDMI cable. Then you have to connect the mobile app to Raspberry's WiFi hotspot and stream or add the lyrics of a song.
@@ -65,9 +63,9 @@ If you have a suggestion that would make this better, please fork the repo and c
 5. Open a Pull Request
 
 ## License
-Distributed under the MIT License. See ```LICENSE.txt``` for more information.
+Distributed under the GNU GPLv3 License. See ```LICENSE.txt``` for more information.
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
 
 -------------------
 Created with ❤️ by Pavel Prodan in 2022
