@@ -1,5 +1,6 @@
 
-![Logo](https://user-images.githubusercontent.com/35011979/184702405-ec6deb05-d8e1-42c9-a5f5-f852f2f26a75.png)
+<img width="400" alt="textimo-banner2" style="text-align:center;" src="https://user-images.githubusercontent.com/35011979/184703095-db4217f5-56f1-4dc3-97af-8457abaac6f7.png">
+
 
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 
