@@ -94,7 +94,8 @@ app.get("/now_playing", (req, res) => {
     console.log(error);
   }
   );
-} );
+});
+
 
 //declare a new GET route for /stop_playing. This route stops the live playing and sets the song_id and verse_number of the livePlayingManager object to 0
 app.get("/stop_playing", (req, res) => {
@@ -102,7 +103,7 @@ app.get("/stop_playing", (req, res) => {
   io.emit('livetitle', "");
   live_manager_service.update(0, 0);
   res.sendStatus(200);
-} );
+});
 
 //declare a new GET route for /refresh_livepage. This route sends a refresh signal to the live page
 app.get("/refresh_livepage", (req, res) => {
@@ -112,7 +113,7 @@ app.get("/refresh_livepage", (req, res) => {
     restore_live_content_service();
   });
   res.sendStatus(200);
-} );
+});
 
 
 // Starting the server
