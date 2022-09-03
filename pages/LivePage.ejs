@@ -17,8 +17,14 @@
         <h3 id="current_verse_number" class="align-content-class text-style-class verse-nb-class"></h3>
     </div>
         
+    <!--
+        WARNING: the socket.io library is loaded only on localhost. To us the library outside you need to specify the full IP
+        address of the server. For example: http://
+    -->
 
-    <script src="/socket.io/socket.io.js"></script>
+    <!--<script src="/socket.io/socket.io.js"></script>-->
+    <script src="http://192.168.137.1:3000/socket.io/socket.io.js"></script>
+
     <script>
         //socket io
         var socket = io();
