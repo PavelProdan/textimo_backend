@@ -101,7 +101,7 @@ app.get("/now_playing", (req, res) => {
 app.get("/stop_playing", (req, res) => {
   io.emit('livecontent', "");
   io.emit('livetitle', "");
-  live_manager_service.update(0, 0);
+  live_manager_service.update("0", "0");
   res.sendStatus(200);
 });
 
