@@ -46,6 +46,7 @@ const reportsRoute =  require("./routes/reports.js");
 const LivePageRoute =  require("./routes/LivePage.js");
 const get_livepage_settingsRoute =  require("./routes/get_livepage_settings.js");
 const save_livepage_settingsRoute =  require("./routes/save_livepage_settings.js");
+const editVerseRoute = require("./routes/editVerse.js");
 
 // Routes def
 app.use("/CheckForConnection", CheckForConnectionRoute);
@@ -59,6 +60,7 @@ app.use("/reports", reportsRoute);
 app.use("/LivePage", LivePageRoute);
 app.use("/get_livepage_settings", get_livepage_settingsRoute);
 app.use("/save_livepage_settings", save_livepage_settingsRoute);
+app.use("/editVerse", editVerseRoute);
 
 
 // The following routes need socket io and LivePlayingManager, so they doesn't use external modules
