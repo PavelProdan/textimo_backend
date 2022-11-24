@@ -19,8 +19,8 @@ function getAllLyrics(song_id){
 //function to get a specific lyrics from the database using NeDB and return the new document. The function takes as parametres the song id and the verse number
 function getLyrics(song_id, verse_number){
     return new Promise((resolve, reject) => {
-        db.lyrics_db.find({verse_number: parseInt(verse_number), song_id: song_id }, function (err, doc) {   
-            if(err){
+        console.log(verse_number);
+        db.lyrics_db.find({verse_number: parseInt(verse_number), song_id: song_id }, function (err, doc) {             if(err){
                 console.log(err);
                 reject(err);
             }
