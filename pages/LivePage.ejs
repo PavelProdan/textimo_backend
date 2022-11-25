@@ -34,6 +34,14 @@
             document.getElementById("live_content").innerHTML = data;
         });
 
+        socket.on('livetitle', function(data) {
+            document.getElementById("live_title").innerHTML = data;
+        });
+
+        socket.on('livesongnumber', function(data) {
+            document.getElementById("current_verse_number").innerHTML = data;
+        });
+
         socket.on('livetitle_verseNumber', function(data) {
             document.getElementById("live_title").innerHTML = data.title;
             document.getElementById("current_verse_number").innerHTML = data.verse_number + " din " + data.total_num_lyrics;
