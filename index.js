@@ -11,7 +11,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 const restore_live_content_service = require("./services/restore_live_content_service.js");
-const get_title_by_songID_service = require("./services/get_title_by_songID_service.js");
+const get_title_by_songID_service = require("./services/get_title_by_songid_service.js");
 const live_manager_service = require("./services/live_manager_service.js");
 const init_livemanager_service = require("./services/init_livemanager_service.js");
 const init_livesettings_service = require("./services/init_livesettings_service.js");
@@ -35,7 +35,7 @@ app.use(
 
 
 // Routes requirements
-const CheckForConnectionRoute = require("./routes/CheckForConnection.js");
+const CheckForConnectionRoute = require("./routes/checkforconnection.js");
 const songsRoute =  require("./routes/songs.js");
 const add_songRoute =  require("./routes/add_song.js");
 const add_lyricsRoute =  require("./routes/add_lyrics.js");
@@ -43,10 +43,10 @@ const songRoute =  require("./routes/song.js");
 const previewRoute =  require("./routes/preview.js");
 const add_reportRoute =  require("./routes/add_report.js");
 const reportsRoute =  require("./routes/reports.js");
-const LivePageRoute =  require("./routes/LivePage.js");
+const LivePageRoute =  require("./routes/livepage.js");
 const get_livepage_settingsRoute =  require("./routes/get_livepage_settings.js");
 const save_livepage_settingsRoute =  require("./routes/save_livepage_settings.js");
-const editVerseRoute = require("./routes/editVerse.js");
+const editVerseRoute = require("./routes/editverse.js");
 const searchRoute = require("./routes/search.js");
 
 // Routes def
