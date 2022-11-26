@@ -5,6 +5,8 @@ const app = express();
 const fs = require("fs");
 const ejs = require('ejs');
 const db = require("../services/db_loader.js");
+const { api_url } = require('../config/config.js');
+
 
 //use EJS as template engine for pages/LivePage.html
 app.set('view engine', 'ejs');
@@ -17,7 +19,7 @@ router.get("/", (req, res) => {
             res.status(500).send(err);
         } else {
             //render the page with the css_content field from the livepage_config database
-            res.render(path.join(__dirname, '../pages/livepage.ejs'), { styles: livepage_config.css_content });
+            res.render(path.join(__dirname, '../pages/livepage.ejs'), { styles: livepage_config.css_content, api_url: api_url });
         }
     });
 });
