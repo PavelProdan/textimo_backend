@@ -65,7 +65,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     css_content += `
         .title-style-class{
             font-family: ${livepage_settings["font-family"]};
-            font-size: ${livepage_settings["font-size"]+10}px;
+            font-size: ${livepage_settings["font-size"]-20}px;
             color: ${livepage_settings["font-color"]};
             font-weight: bold;
             display: ${title_display};
@@ -73,6 +73,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 
         .verse-nb-class{
             display: ${showCurrentStrofaNumber_display};
+            font-size: ${livepage_settings["font-size"]-20}px;
             font-weight: bold;
         }
     `;
