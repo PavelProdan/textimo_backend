@@ -62,8 +62,8 @@ xset s noblank
 unclutter &
 chromium-browser http://172.24.1.1:3000/LivePage --window-size=1920,1080 --start-fullscreen --kiosk --incognito --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-features=TranslateUI --disk-cache-dir=/dev/null
 ```
-8) Add executable executable permission to these files and create a cronjob to run on startup *mainstart.sh*
-9) Install textimo_mobile_app on your phone (the app is only available in Romanian language, no English support for now)
+8) Add executable permission to these files and create a cronjob to run on startup *mainstart.sh*
+9) Install textimo_mobile_app on your phone (the app is only available in Romanian language, no English support for now): https://github.com/PavelProdan/textimo_mobile_app
 
 ## Documenation
 
