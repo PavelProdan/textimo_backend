@@ -45,6 +45,7 @@ Textimo uses two services:
 5) Unarchive the .zip file and move the **textimo_backend** folder to the home folder of pi user
 6) Start the Node app with PM2 and save it to open on startup
 7) In the home folder, add the following .sh files: 
+
 mainstart.sh
 ```
 #!/bin/bash
