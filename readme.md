@@ -67,8 +67,11 @@ chromium-browser http://172.24.1.1:3000/LivePage --window-size=1920,1080 --start
 
 ## Documenation
 
-The release executable is a NodeJS app exported with PKG. If you want to test or develop locally you have to clone the master branch and install the node modules. A REST API documenation is available at "http://localhost/api-docs" using Swagger.
-The page that contains the livestream is available at http://localhost/LivePage.
+Regardless of whether you develop locally or directly in production, the full App is available on the *main* branch and uses port 3000. The REST API documenation is available "/api-docs" route using Swagger. The page that contains the livestream is available at "/LivePage".
+
+It's important to don't delete the files in "database" folder. You can remove the content using the API routes.
+
+In *index.js* you can find the main NodeJS App and the project uses a simple route-service schema. All routes are available in the "routes" folder and in the "services" folder you can find the backend process that interacts with the database.
 
 ## Contributing
 
