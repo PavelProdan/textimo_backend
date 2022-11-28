@@ -19,10 +19,13 @@ https://user-images.githubusercontent.com/35011979/204353532-cc59342e-797e-4b2f-
 
 ## How it works
 
-Textimo uses two services:
-- **Textimo Backend Server:**  it's a NodeJS App that runs in the background and a Full Screen Sandbox Chromium Window that is displayed on the external screen via HDMI (projector or display). Raspberry Pi runs the light versions (without desktop) edition of Raspbian, but uses Xorg display manager. 
+<img width="1503" alt="textimo diagram" src="https://user-images.githubusercontent.com/35011979/204353994-6296e792-e9db-4041-861f-9c23d263af41.png">
 
-- **Textimo Mobile App:** a Flutter app that uses Textimo Server REST API to control everything. The app connects to raspberry by WiFi hotspot. 
+Textimo uses two services:
+
+- **Textimo Backend Server:**  it's a NodeJS App that runs in the background and a Full Screen Sandbox Chromium Window that is displayed on the external screen via HDMI (projector or display) on startup. Raspberry Pi runs the light versions (without desktop) edition of Raspbian (Stretch), and uses Xorg display manager to display only the Chromium window. 
+
+- **Textimo Mobile App:** a Flutter app that uses Textimo Server REST API to control everything. The app connects to Raspberry PI using the WiFi hotspot created by the Raspberry itself. 
 
 
 ## Features
