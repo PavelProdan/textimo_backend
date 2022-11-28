@@ -38,17 +38,37 @@ Textimo uses two services:
 
 ## How to install Textimo Server on Raspberry
 
-1)Download and install the latest Raspberry Pi OS Lite
+1) Download Raspberry Pi OS Lite: https://www.raspberrypi.com/software/operating-systems/. The desktop version works as well, but the Lite version offers a faster boot time.
+2) Install Node 16, NPM, PM2, Chromium and X11/Xinit X window manager
+3) Setup Raspberry to create a WiFi hotspot and make sure that the IP Address of the Raspberry is always 172.24.1.1. *If you want to change the IP Address you have to update start.sh, textimo_backend/config/config.js, textimo_mobile_app/lib/config/config.dart (and the rebuild the flutter app)*
+4) Download the latest Textimo Backend Release or clone the main github branch
+5) Unarchive the .zip file and move the **textimo_backend** folder to the home folder of pi user
+6) Start the Node app with PM2 and save it to open on startup
+7) In the home folder, add the following .sh files: 
+mainstart.sh
+```
+#!/bin/bash
+startx ./start.sh
+```
 
-2)Clone the latest release of Textimo Server
+start.sh
+```
+#!/bin/sh
+xset -dpms
+xset s off
+xset s noblank
 
-3)Run the install.sh using:
-
+unclutter &
+chromium-browser http://172.24.1.1:3000/LivePage --window-size=1920,1080 --start-fullscreen --kiosk --incognito --noerrdialogs --disable-translate --no-first-run --fast --fast-start --disable-infobars --disable-features=TranslateUI --disk-cache-dir=/dev/null
+```
+8) Add executable executable permission to these files and create a cronjob to run on startup *mainstart.sh*
+9) Install textimo_mobile_app on your phone (the app is only available in Romanian language, no English support for now)
 
 ## Documenation
 
 The release executable is a NodeJS app exported with PKG. If you want to test or develop locally you have to clone the master branch and install the node modules. A REST API documenation is available at "http://localhost/api-docs" using Swagger.
 The page that contains the livestream is available at http://localhost/LivePage.
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
