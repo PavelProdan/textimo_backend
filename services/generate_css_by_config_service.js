@@ -65,16 +65,16 @@ table, caption, tbody, tfoot, thead, tr, th, td {
     css_content += `
         .title-style-class{
             font-family: ${livepage_settings["font-family"]};
-            font-size: ${livepage_settings["font-size"]-20}px;
+            font-size: ${livepage_settings["font-size"]/3}px;
             color: ${livepage_settings["font-color"]};
-            font-weight: bold;
+            /*font-weight: bold;*/
             display: ${title_display};
         }
 
         .verse-nb-class{
             display: ${showCurrentStrofaNumber_display};
-            font-size: ${livepage_settings["font-size"]-20}px;
-            font-weight: bold;
+            font-size: ${livepage_settings["font-size"]/3}px;
+            /*font-weight: bold;*/
         }
     `;
 
