@@ -10,13 +10,12 @@
 
 # About Textimo
 
-Textimo is a software solution designed to stream live lyrics to a video projector without a laptop, by simply connecting a Raspberry Pi to the video projector. Raspbian is configured to be plug and play: you just have to power up the Raspberry and connect the HDMI cable. Then you have to connect the mobile app to Raspberry's WiFi hotspot and stream or add the lyrics of a song.
+Textimo is a software solution designed to stream live lyrics to a video projector without a laptop, by simply connecting a Raspberry Pi to the video projector. The Raspberry is configured to be plug and play: you just have to power up the Raspberry and connect the HDMI cable to the video projector. Then you have to connect the mobile app to Raspberry's WiFi hotspot and stream or add lyrics.
 
 From the Textimo Mobile App, you can control and customize the live stream: what song's verse to show or how the Live Page should look (background color, font size, etc.)
 
 ## Short Demo
-
-coming soon
+https://user-images.githubusercontent.com/35011979/204353532-cc59342e-797e-4b2f-8d14-902e7ce11ab6.mp4
 
 ## How it works
 
