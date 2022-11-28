@@ -25,7 +25,7 @@ Textimo uses two services:
 
 - **Textimo Backend Server:**  it's a NodeJS App that runs in the background on the Raspberry Pi and a Full Screen Sandbox Chromium Window that is displayed on the external screen via HDMI (projector or display) on startup. Raspberry Pi runs the light versions (without desktop) edition of Raspbian (Stretch), and uses Xorg display manager to display only the Chromium window. 
 
-- **Textimo Mobile App:** a Flutter app that uses Textimo Server REST API to control everything. The app connects to Raspberry PI using the WiFi hotspot created by the Raspberry itself. 
+- **Textimo Mobile App:** a Flutter app that uses Textimo Server REST API to control everything. The app connects to the Raspberry PI using the WiFi hotspot created by the Raspberry itself. 
 
 
 ## Features
@@ -67,11 +67,11 @@ chromium-browser http://172.24.1.1:3000/LivePage --window-size=1920,1080 --start
 
 ## Documenation
 
-Regardless of whether you develop locally or directly in production, the full App is available on the *main* branch and uses port 3000. The REST API documenation is available "/api-docs" route using Swagger. The page that contains the livestream is available at "/LivePage".
+Regardless of whether you develop locally or directly in production, the full App is available on the *main* branch and uses port 3000. The REST API documenation is available at "/api-docs" route using Swagger. The page that contains the livestream is available at "/LivePage".
 
-It's important to don't delete the files in "database" folder. You can remove the content using the API routes.
+Important! Don't delete the files from the "database" folder. You can remove the content using the API routes.
 
-In *index.js* you can find the main NodeJS App and the project uses a simple route-service schema. All routes are available in the "routes" folder and in the "services" folder you can find the backend process that interacts with the database.
+In *index.js* you can find the main NodeJS App. The project uses a simple route-service schema. All routes are available in the "routes" folder and in the "services" folder you can find the backend process that interacts with the database.
 
 ## Contributing
 
